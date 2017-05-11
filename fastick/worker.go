@@ -13,9 +13,15 @@
 
 package fastick
 
-type Endpoint struct {
-	ID string
-	Method string
-	Path string
-	BaseURL string
+import (
+	"log"
+	"time"
+)
+
+func worker(endpoints chan Endpoint) {
+	for endpoint := range endpoints {
+		// TODO: Save metrics somewhere
+		log.Println(endpoint)
+		time.Sleep(time.Second)
+	}
 }

@@ -24,21 +24,21 @@ import (
 )
 
 type SchedulerConfig struct {
-	Interval int
+	Interval         int
 
-	DatabaseHost string
+	DatabaseHost     string
 	DatabaseUsername string
 	DatabasePassword string
-	DatabaseName string
+	DatabaseName     string
 
-	QueueHost string
-	QueueUsername string
-	QueuePassword string
-	QueuePort int
+	QueueHost        string
+	QueueUsername    string
+	QueuePassword    string
+	QueuePort        int
 }
 
 func NewScheduler(config SchedulerConfig) Scheduler {
-	return Scheduler{ config: config }
+	return Scheduler{config: config }
 }
 
 type Scheduler struct {
@@ -83,7 +83,6 @@ func (self *Scheduler) addToQueue(endpoint Endpoint) error {
 		return err
 	}
 
-
 	ch, err := conn.Channel()
 	if err != nil {
 		return err
@@ -91,11 +90,11 @@ func (self *Scheduler) addToQueue(endpoint Endpoint) error {
 
 	queue, err := ch.QueueDeclare(
 		"tasks", // name
-		true,   // durable
-		false,   // delete when unused
-		false,   // exclusive
-		false,   // no-wait
-		nil,     // arguments
+		true, // durable
+		false, // delete when unused
+		false, // exclusive
+		false, // no-wait
+		nil, // arguments
 	)
 	if err != nil {
 		return err
@@ -128,9 +127,7 @@ func (self *Scheduler) initDatabase() *sql.DB {
 		self.config.DatabaseHost, self.config.DatabaseUsername, self.config.DatabasePassword, self.config.DatabaseName)
 
 	db, err := sql.Open("postgres", connectionInfo)
-	if err != nil {
-		panic(err)
-	}
+	failOnError(err, "Could not connect to database.")
 	return db
 }
 

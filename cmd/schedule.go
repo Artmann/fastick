@@ -18,14 +18,14 @@ import (
 	"github.com/artmann/fastick/fastick"
 )
 
-var config fastick.SchedulerConfig
+var scheduleConfig fastick.SchedulerConfig
 
 var scheduleCmd = &cobra.Command{
 	Use:   "schedule",
 	Short: "",
 	Long: ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		scheduler := fastick.NewScheduler(config)
+		scheduler := fastick.NewScheduler(scheduleConfig)
 		scheduler.Run()
 	},
 }
@@ -33,17 +33,17 @@ var scheduleCmd = &cobra.Command{
 func init() {
 	RootCmd.AddCommand(scheduleCmd)
 
-	config = fastick.SchedulerConfig{}
-	scheduleCmd.Flags().IntVar(&config.Interval, "interval", 15, "Specify the interval in seconds in which tasks are scheduled")
+	scheduleConfig = fastick.SchedulerConfig{}
+	scheduleCmd.Flags().IntVar(&scheduleConfig.Interval, "interval", 15, "Specify the interval in seconds in which tasks are scheduled")
 
-	scheduleCmd.Flags().StringVar(&config.DatabaseHost, "database-host", "localhost", "Database hostname")
-	scheduleCmd.Flags().StringVar(&config.DatabaseName, "database-name", "fastick", "Database name")
-	scheduleCmd.Flags().StringVar(&config.DatabaseUsername, "database-username", "root", "Database username")
-	scheduleCmd.Flags().StringVar(&config.DatabasePassword, "database-password", "", "Database password")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.DatabaseHost, "database-host", "localhost", "Database hostname")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.DatabaseName, "database-name", "fastick", "Database name")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.DatabaseUsername, "database-username", "root", "Database username")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.DatabasePassword, "database-password", "", "Database password")
 
-	scheduleCmd.Flags().StringVar(&config.QueueHost, "queque-host", "localhost", "Queue host")
-	scheduleCmd.Flags().IntVar(&config.QueuePort, "queque-port", 5672, "Queue port")
-	scheduleCmd.Flags().StringVar(&config.QueueUsername, "queque-username", "guest", "Queue username")
-	scheduleCmd.Flags().StringVar(&config.QueuePassword, "queque-password", "guest", "Queue password")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.QueueHost, "queue-host", "localhost", "Queue host")
+	scheduleCmd.Flags().IntVar(&scheduleConfig.QueuePort, "queue-port", 5672, "Queue port")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.QueueUsername, "queue-username", "guest", "Queue username")
+	scheduleCmd.Flags().StringVar(&scheduleConfig.QueuePassword, "queue-password", "guest", "Queue password")
 
 }
