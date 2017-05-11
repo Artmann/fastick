@@ -1,0 +1,9 @@
+version: '2'
+services:
+  scheduler:
+    build: .
+    command: "/app/bin/fastick schedule"
+  work:
+    build: .
+    command: "/app/bin/fastick work"
+
